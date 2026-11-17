@@ -1,0 +1,51 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "enabledManagers": ["cargo", "github-actions"],
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"],
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "description": "Keep the egui stack in lockstep",
+      "matchManagers": ["cargo"],
+      "matchPackageNames": [
+        "egui",
+        "eframe",
+        "epaint",
+        "emath",
+        "ecolor",
+        "egui-wgpu",
+        "egui-winit",
+        "egui_extras",
+        "wgpu",
+        "winit"
+      ],
+      "groupName": "egui stack"
+    },
+    {
+      "description": "Group tracing crates",
+      "matchManagers": ["cargo"],
+      "matchPackageNames": ["tracing", "tracing-*"],
+      "groupName": "tracing"
+    },
+    {
+      "description": "Group GitHub Actions updates",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "Automerge patch, pin and digest updates once CI is green",
+      "matchUpdateTypes": ["patch", "pin", "digest"],
+      "automerge": true
+    }
+  ]
+}
