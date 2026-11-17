@@ -3,6 +3,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod app;
+mod settings_ui;
 
 use anyhow::Context as _;
 use tracing_subscriber::EnvFilter;
@@ -10,6 +11,14 @@ use tracing_subscriber::EnvFilter;
 fn main() -> anyhow::Result<()> {
     init_logging();
     tracing::info!(version = pixelpouch_core::VERSION, "starting");
+
+    let store = match pixelpouch_core::settings::SettingsStore::platform() {
+        Ok(store) => Some(store),
+        Err(e) => {
+            tracing::warn!(error = %e, "settings will not be persisted");
+            None
+        }
+    };
 
     let options = eframe::NativeOptions {
         renderer: eframe::Renderer::Wgpu,
@@ -24,7 +33,7 @@ fn main() -> anyhow::Result<()> {
     eframe::run_native(
         pixelpouch_core::APP_NAME,
         options,
-        Box::new(|_cc| Ok(Box::new(app::PixelPouchApp::default()))),
+        Box::new(move |_cc| Ok(Box::new(app::PixelPouchApp::new(store)))),
     )
     .map_err(|e| anyhow::anyhow!("{e}"))
     .context("failed to run the application window")

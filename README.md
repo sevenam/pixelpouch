@@ -39,6 +39,7 @@ cargo clippy --workspace --all-targets -- -D warnings
 ## Conventions
 
 - Libraries return typed errors via `thiserror` (`pixelpouch_core::Error`); the binary uses `anyhow`.
+- User settings are TOML in the platform config directory (`%APPDATA%\PixelPouch\config\settings.toml`, `~/Library/Application Support/PixelPouch/settings.toml`, `~/.config/pixelpouch/settings.toml`). A corrupt file is moved to `settings.toml.bak` and defaults are used.
 - Logging uses `tracing`; set `RUST_LOG` (e.g. `RUST_LOG=debug`) to change verbosity.
 - Rendering uses wgpu with DX12 on Windows (for fast startup). Set `WGPU_BACKEND` (e.g. `vulkan`, `gl`) to override.
 
