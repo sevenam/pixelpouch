@@ -11,6 +11,8 @@ repository.workspace = true
 pixelpouch-core.workspace = true
 thiserror.workspace = true
 tracing.workspace = true
+image.workspace = true
+xcap.workspace = true
 
 [lints]
 workspace = true
