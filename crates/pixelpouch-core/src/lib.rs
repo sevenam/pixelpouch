@@ -26,6 +26,22 @@ pub enum Error {
     /// The platform has no usable config directory (no home directory).
     #[error("no configuration directory available on this system")]
     NoConfigDir,
+
+    /// The platform capture API reported an error.
+    #[error("screen capture failed: {0}")]
+    Capture(String),
+
+    /// No monitor with the given id is currently connected.
+    #[error("monitor {0} not found")]
+    MonitorNotFound(u32),
+
+    /// The requested capture region is empty or does not overlap any monitor.
+    #[error("capture region is empty or does not overlap any monitor")]
+    RegionOutsideDesktop,
+
+    /// The capture backend does not support the requested option.
+    #[error("not supported by this capture backend: {0}")]
+    Unsupported(&'static str),
 }
 
 /// Convenience result alias using [`Error`].

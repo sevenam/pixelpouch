@@ -26,7 +26,8 @@ cargo run -p pixelpouch-app --release
 Debian/Ubuntu:
 
 ```sh
-sudo apt install libxkbcommon-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libgl1-mesa-dev
+sudo apt install libxkbcommon-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libgl1-mesa-dev \
+  libxcb1-dev libxcb-randr0-dev libpipewire-0.3-dev libclang-dev libgbm-dev libegl1-mesa-dev libdrm-dev
 ```
 
 ## Checks
